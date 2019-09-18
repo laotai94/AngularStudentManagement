@@ -48,11 +48,32 @@ public class CourseService {
         return courseDtos;
     }
 
+    public List<CourseDto> findAllCoursesLengthGreaterThan10() {
+
+        //Cache
+        if (courseDtos.isEmpty()) {
+            List<Course> courses = courseRepository.findAll();
+
+            for (Course c : courses) {
+                if (c.getCourseName().length() > 10) {
+                    courseDtos.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
+                }
+        }
+
+        return courseDtos;
+        }
+
+        return courseDtos;
+    }
+
+
+
+
     public List<CourseDto> findAllCoursesDtoFromDB(){
         return courseRepository.findAllCoursesDto();
     }
 
-    public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
+        public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
         return courseRepository.findAllCoursesDtoWithTeacherName();
     }
 
@@ -123,21 +144,21 @@ public class CourseService {
 
     }
 
-    public void addCourseToStudent(UserCourse userCourse) throws Exception {
-
-        Optional<User> curUser = userService.getUserWithAuthorities();
-        // 2 find course from course table
-
-
-        UserCourse t1 =  UserCourse.builder()
-            .course(c1)
-            .user(curUser)
-            .build();
-
-        try {
-            UserCourseRepository.saveAndFlush(t1);
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
+//    public void addCourseToStudent(UserCourse userCourse) throws Exception {
+//
+//        Optional<User> curUser = userService.getUserWithAuthorities();
+//        // 2 find course from course table
+//
+//
+//        UserCourse t1 =  UserCourse.builder()
+//            .course(c1)
+//            .user(curUser)
+//            .build();
+//
+//        try {
+//            UserCourseRepository.saveAndFlush(t1);
+//        } catch (Exception e){
+//            throw new Exception(e.getMessage());
+//        }
+//    }
 }
