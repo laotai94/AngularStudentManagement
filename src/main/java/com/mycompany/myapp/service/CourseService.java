@@ -31,6 +31,8 @@ public class CourseService {
     private UserService userService;
 
     List<CourseDto> courseDtos = new ArrayList<>();
+    List<CourseDto> courseGt10 = new ArrayList<>();
+    List<CourseDto> courseLen = new ArrayList<>();
 
     public List<CourseDto> findAllCourses() {
 
@@ -48,32 +50,48 @@ public class CourseService {
         return courseDtos;
     }
 
-    public List<CourseDto> findAllCoursesLengthGreaterThan10() {
+//    public List<CourseDto> findAllCoursesLengthGreaterThan10() {
+////
+////        //Cache
+////        if (courseGt10.isEmpty()) {
+////            List<Course> courses = courseRepository.findAll();
+////
+////            for (Course c : courses) {
+////                if (c.getCourseName().length() > 10) {
+////                    courseGt10.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
+////                }
+//            }
+//
+//            return courseGt10;
+//        }
+//
+//        return courseGt10;
+//    }
+
+    public List<CourseDto> findAllCoursesLength(int length) {
 
         //Cache
-        if (courseDtos.isEmpty()) {
+        if (courseLen.isEmpty()) {
             List<Course> courses = courseRepository.findAll();
 
             for (Course c : courses) {
-                if (c.getCourseName().length() > 10) {
-                    courseDtos.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
+                if (c.getCourseName().length() > length) {
+                    courseLen.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
                 }
+            }
+
+            return courseLen;
         }
 
-        return courseDtos;
-        }
-
-        return courseDtos;
+        return courseLen;
     }
-
-
-
 
     public List<CourseDto> findAllCoursesDtoFromDB(){
         return courseRepository.findAllCoursesDto();
     }
 
-        public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
+
+    public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
         return courseRepository.findAllCoursesDtoWithTeacherName();
     }
 
