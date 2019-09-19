@@ -31,7 +31,6 @@ public class CourseService {
     private UserService userService;
 
     List<CourseDto> courseDtos = new ArrayList<>();
-    List<CourseDto> courseGt10 = new ArrayList<>();
     List<CourseDto> courseLen = new ArrayList<>();
 
     public List<CourseDto> findAllCourses() {
@@ -50,27 +49,8 @@ public class CourseService {
         return courseDtos;
     }
 
-//    public List<CourseDto> findAllCoursesLengthGreaterThan10() {
-////
-////        //Cache
-////        if (courseGt10.isEmpty()) {
-////            List<Course> courses = courseRepository.findAll();
-////
-////            for (Course c : courses) {
-////                if (c.getCourseName().length() > 10) {
-////                    courseGt10.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
-////                }
-//            }
-//
-//            return courseGt10;
-//        }
-//
-//        return courseGt10;
-//    }
-
     public List<CourseDto> findAllCoursesLength(int length) {
-
-        //Cache
+        courseLen.clear();
         if (courseLen.isEmpty()) {
             List<Course> courses = courseRepository.findAll();
 
@@ -82,21 +62,20 @@ public class CourseService {
 
             return courseLen;
         }
-
         return courseLen;
     }
 
-    public List<CourseDto> findAllCoursesDtoFromDB(){
+    public List<CourseDto> findAllCoursesDtoFromDB() {
         return courseRepository.findAllCoursesDto();
     }
 
 
-    public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB(){
+    public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB() {
         return courseRepository.findAllCoursesDtoWithTeacherName();
     }
 
 
-    public void registerCourse(String courseName) throws Exception{
+    public void registerCourse(String courseName) throws Exception {
         Optional<User> curUser = userService.getUserWithAuthorities();
         Optional<Course> curCourse = courseRepository.findCourseByCourseName(courseName);
 

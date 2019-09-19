@@ -30,22 +30,13 @@ public class CourseController {
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
-//    @GetMapping(path = "/api/course/findAllCoursesLengthGreaterThan10", produces = "application/json")
-//    public HttpEntity<List<CourseDto>> findAllCoursesLengthGreaterThan10(){
-//
-//        List<CourseDto> allCoursesLengthGreaterThan10 = courseService.findAllCoursesLengthGreaterThan10();
-//
-//        return new ResponseEntity<>(allCoursesLengthGreaterThan10, HttpStatus.OK);
-//    }
-
-    @GetMapping(path = "/api/course/findAllCoursesLengthGreaterThan/{length}", produces = "application/json")
-    public HttpEntity<List<CourseDto>> findAllCoursesLength(@PathVariable("length") int length){
+    @GetMapping(path = "/api/course/findAllCoursesLength/{length}", produces = "application/json")
+    public HttpEntity<List<CourseDto>> findAllCoursesLength(@PathVariable("length") int length) {
 
         List<CourseDto> allCoursesLength = courseService.findAllCoursesLength(length);
 
         return new ResponseEntity<>(allCoursesLength, HttpStatus.OK);
     }
-
 
 
     @GetMapping(path = "/api/course/findAllCoursesDto", produces = "application/json")
