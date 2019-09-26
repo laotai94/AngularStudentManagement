@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     classeNameNeedToReg: string;
+    courseNameNeedToDel: string;
+    courseNeedToAdd: CourseDto;
 
     constructor(
         private principal: Principal,
@@ -25,7 +27,6 @@ export class HomeComponent implements OnInit {
     ) {}
 
     courses: CourseDto[] = [];
-
     coursesWithTN: CourseWithTNDto[] = [];
 
     ngOnInit() {
@@ -73,15 +74,32 @@ export class HomeComponent implements OnInit {
     }
 
     // registerCourse(courseName) {
-    //
+    //     this.courseService.addCourseToStudent()
     // }
 
     clearAllCourses() {
         this.courses = [];
     }
 
-    addCourseToStudent() {
-        const courseName = 'temp';
-        this.courseService.addCourseToStudent(courseName, currentUserCredential);
+    clearAllCoursesWithTN() {
+        this.coursesWithTN = [];
+    }
+
+    // addCourseToStudent() {
+    //     const courseName = 'temp';
+    //     this.courseService.addCourseToStudent(courseName, currentUserCredential);
+    // }
+
+    deleteCourse() {
+        debugger;
+        this.courseService.delete(this.courseNameNeedToDel).subscribe();
+        this.courseNameNeedToDel = '';
+        this.clearAllCoursesWithTN();
+    }
+
+    addCourse() {
+        debugger;
+        this.courseService.add(this.courseNeedToAdd).subscribe();
+        this.courseNeedToAdd = new CourseDto();
     }
 }

@@ -34,7 +34,7 @@ public class CourseService {
     List<CourseDto> courseLen = new ArrayList<>();
 
     public List<CourseDto> findAllCourses() {
-
+        courseDtos.clear();
         //Cache
         if (courseDtos.isEmpty()) {
             List<Course> courses = courseRepository.findAll();
