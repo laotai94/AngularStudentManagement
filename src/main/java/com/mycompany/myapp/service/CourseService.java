@@ -7,6 +7,7 @@ import com.mycompany.myapp.domain.dto.CourseDto;
 import com.mycompany.myapp.domain.dto.CourseWithTNDto;
 import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.repository.UserCourseRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ import java.util.Optional;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserCourseRepository userCourseRepository;
@@ -49,26 +53,46 @@ public class CourseService {
         return courseDtos;
     }
 
-    public List<CourseDto> findAllCoursesLength(int length) {
-        courseLen.clear();
-        if (courseLen.isEmpty()) {
-            List<Course> courses = courseRepository.findAll();
-
-            for (Course c : courses) {
-                if (c.getCourseName().length() > length) {
-                    courseLen.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
-                }
-            }
-
-            return courseLen;
-        }
-        return courseLen;
-    }
+//    HW 4
+//    public List<CourseDto> findAllCoursesLength(int length) {
+//        courseLen.clear();
+//        if (courseLen.isEmpty()) {
+//            List<Course> courses = courseRepository.findAll();
+//
+//            for (Course c : courses) {
+//                if (c.getCourseName().length() > length) {
+//                    courseLen.add(new CourseDto(c.getCourseName(), c.getCourseLocation(), c.getCourseContent(), c.getTeacherId()));
+//                }
+//            }
+//
+//            return courseLen;
+//        }
+//        return courseLen;
+//    }
 
     public List<CourseDto> findAllCoursesDtoFromDB() {
         return courseRepository.findAllCoursesDto();
     }
 
+
+//    public List<CourseDto> findAllUserCoursesDtoFromDB() {return userCourseRepository.findAllUserCoursesDto();}
+
+//        public List<CourseDto> findAllUserCoursesDtoFromDB(String userName) {
+//        Optional<User> userResult = userRepository.findOneByLogin(userName);
+//        List<CourseDto> result = new ArrayList();
+//        if (userResult.isPresent()) {
+//            User user = userResult.get();
+//            userCourseRepository.findAllByUser(user).ifPresent((courses -> {
+//                for (UserCourse userCourse : courses) {
+//                    Course course = userCourse.getCourse();
+//                    result.add(new CourseDto(course.getCourseName(), course.getCourseLocation(),
+//                                             course.getCourseContent(), course.getTeacherId()));
+//                }
+//            }));
+//        }
+//
+//        return result;
+//    }
 
     public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB() {
         return courseRepository.findAllCoursesDtoWithTeacherName();

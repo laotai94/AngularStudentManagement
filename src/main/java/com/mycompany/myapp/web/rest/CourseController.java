@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.domain.dto.CourseDto;
 import com.mycompany.myapp.domain.dto.CourseWithTNDto;
+import com.mycompany.myapp.security.AuthoritiesConstants;
 import com.mycompany.myapp.service.CourseService;
 import io.swagger.annotations.Api;
 import org.hibernate.validator.constraints.NotBlank;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-@Api(value="Course Service Controller", description = "Controller for find couses information")
+@Api(value="Course Service Controller", description = "Controller for find courses information")
 public class CourseController {
     @Autowired
     private CourseService courseService;
@@ -29,14 +31,14 @@ public class CourseController {
 
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
-
-    @GetMapping(path = "/api/course/findAllCoursesLength/{length}", produces = "application/json")
-    public HttpEntity<List<CourseDto>> findAllCoursesLength(@PathVariable("length") int length) {
-
-        List<CourseDto> allCoursesLength = courseService.findAllCoursesLength(length);
-
-        return new ResponseEntity<>(allCoursesLength, HttpStatus.OK);
-    }
+//    HW4
+//    @GetMapping(path = "/api/course/findAllCoursesLength/{length}", produces = "application/json")
+//    public HttpEntity<List<CourseDto>> findAllCoursesLength(@PathVariable("length") int length) {
+//
+//        List<CourseDto> allCoursesLength = courseService.findAllCoursesLength(length);
+//
+//        return new ResponseEntity<>(allCoursesLength, HttpStatus.OK);
+//    }
 
 
     @GetMapping(path = "/api/course/findAllCoursesDto", produces = "application/json")
@@ -46,6 +48,14 @@ public class CourseController {
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
+//    @GetMapping(path = "/api/course/findAllUserCoursesDto", produces = "application/json")
+//    public HttpEntity<List<CourseDto>> findAllUserCoursesDto(){
+//        List<CourseDto> allUserCourses = courseService.findAllUserCoursesDtoFromDB();
+//
+//        return new ResponseEntity<>(allUserCourses, HttpStatus.OK);
+//    }
+
+
     @GetMapping(path = "/api/course/findAllCoursesWithTNDto", produces = "application/json")
     public HttpEntity<List<CourseWithTNDto>> findAllCoursesWithTNDto(){
         List<CourseWithTNDto> allCourses = courseService.findAllCoursesDtoWithTeacherNameFromDB();
@@ -54,7 +64,7 @@ public class CourseController {
     }
 
     @PostMapping(path = "/api/course/registerCourse/{courseName}", produces = "application/json")
-    public HttpStatus registerCourse(@PathVariable String courseName) {
+    public HttpStatus registerCourse(@PathVariable("courseName") String courseName) {
         try {
             courseService.registerCourse(courseName);
             return HttpStatus.OK;
@@ -64,6 +74,7 @@ public class CourseController {
     }
 
     @PostMapping(path = "/api/course/addCourse", produces = "application/json")
+    @Secured(AuthoritiesConstants.ADMIN)
     public HttpStatus addCourse(@RequestBody @NotNull CourseDto course) {
         try {
             courseService.addCourse(course);
@@ -94,6 +105,7 @@ public class CourseController {
     }
 
     @DeleteMapping(path = "/api/course/deleteCourse/{courseName}", produces = "application/js")
+    @Secured(AuthoritiesConstants.ADMIN)
     public HttpStatus deleteCourse(@NotNull @PathVariable("courseName") String courseName) {
         try {
             courseService.deleteCourse(courseName);

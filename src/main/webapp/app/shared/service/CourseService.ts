@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CourseDto } from 'app/shared/model/course-dto.model';
 import { SERVER_API_URL } from 'app/app.constants';
 import { CourseWithTNDto } from 'app/shared/model/courseWithTN-dto.model';
+import { UserCourseDto } from 'app/shared/model/userCourse-dto.model';
 
 @Injectable()
 export class CourseService {
@@ -12,22 +13,28 @@ export class CourseService {
     private courseAddUrl = SERVER_API_URL + '/api/course/addCourse';
     private courseDeleteUrl = SERVER_API_URL + '/api/course/deleteCourse';
     private courseUpdateUrl = SERVER_API_URL + '/api/course/updateCourse';
+    private courseRegisterUrl = SERVER_API_URL + '/api/course/registerCourse';
     private addCourseToStudentUrl = SERVER_API_URL + '/api/course/addCourseToStudent';
+    private userCourseAddressUrl = SERVER_API_URL + '/api/course/findAllUserCoursesDto';
 
     constructor(private http: HttpClient) {}
 
     getCourseInfo(): Observable<CourseDto[]> {
-        debugger;
+        //debugger;
         return this.http.get<CourseDto[]>(`${this.courseAddressUrl}`);
     }
+
+    // getUserCourseInfo(): Observable<UserCourseDto[]> {
+    //     //debugger;
+    //     return this.http.get<UserCourseDto[]>(`${this.userCourseAddressUrl}`);
+    // }
 
     getCourseInfoWithTN(): Observable<CourseWithTNDto[]> {
         return this.http.get<CourseWithTNDto[]>(`${this.courseAddressWithTNUrl}`);
     }
 
-    add(course: CourseDto): Observable<Response> {
-        debugger;
-        return this.http.post<Response>(`${this.courseAddUrl}`, course);
+    addCourse(course: CourseDto): Observable<Response> {
+        return this.http.post<Response>(this.courseAddUrl, course);
     }
 
     delete(courseName: String): Observable<Response> {
@@ -36,6 +43,12 @@ export class CourseService {
 
     update(course: CourseDto): Observable<Response> {
         return this.http.put<Response>(this.courseUpdateUrl, course);
+    }
+
+    register(courseName: String): Observable<Response> {
+        debugger;
+        //return this.http.post<Response>(this.courseRegisterUrl, {courseName});
+        return this.http.post<Response>(`${this.courseRegisterUrl}/${courseName}`, null);
     }
 
     addCourseToStudent(courseName: String, currentUserCredential: String) {
