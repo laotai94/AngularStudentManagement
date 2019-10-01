@@ -48,12 +48,12 @@ public class CourseController {
         return new ResponseEntity<>(allCourses, HttpStatus.OK);
     }
 
-//    @GetMapping(path = "/api/course/findAllUserCoursesDto", produces = "application/json")
-//    public HttpEntity<List<CourseDto>> findAllUserCoursesDto(){
-//        List<CourseDto> allUserCourses = courseService.findAllUserCoursesDtoFromDB();
-//
-//        return new ResponseEntity<>(allUserCourses, HttpStatus.OK);
-//    }
+    @GetMapping(path = "/api/course/findAllUserCoursesDto", produces = "application/json")
+    public HttpEntity<List<CourseDto>> findAllUserCoursesDto(){
+        List<CourseDto> allUserCourses = courseService.findAllUserCoursesDtoFromDB();
+
+        return new ResponseEntity<>(allUserCourses, HttpStatus.OK);
+    }
 
 
     @GetMapping(path = "/api/course/findAllCoursesWithTNDto", produces = "application/json")

@@ -24,10 +24,10 @@ export class CourseService {
         return this.http.get<CourseDto[]>(`${this.courseAddressUrl}`);
     }
 
-    // getUserCourseInfo(): Observable<UserCourseDto[]> {
-    //     //debugger;
-    //     return this.http.get<UserCourseDto[]>(`${this.userCourseAddressUrl}`);
-    // }
+    getUserCourseInfo(): Observable<UserCourseDto[]> {
+        //debugger;
+        return this.http.get<UserCourseDto[]>(`${this.userCourseAddressUrl}`);
+    }
 
     getCourseInfoWithTN(): Observable<CourseWithTNDto[]> {
         return this.http.get<CourseWithTNDto[]>(`${this.courseAddressWithTNUrl}`);

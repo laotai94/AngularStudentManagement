@@ -1,5 +1,4 @@
 package com.mycompany.myapp.domain.dto;
-
 import lombok.*;
 
 @Data
@@ -7,8 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public interface CourseDto {
-
+public class CourseAdded implements CourseDto {
     private String courseName;
 
     private String courseLocation;

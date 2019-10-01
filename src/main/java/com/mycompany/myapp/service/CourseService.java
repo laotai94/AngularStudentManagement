@@ -75,24 +75,25 @@ public class CourseService {
     }
 
 
-//    public List<CourseDto> findAllUserCoursesDtoFromDB() {return userCourseRepository.findAllUserCoursesDto();}
 
-//        public List<CourseDto> findAllUserCoursesDtoFromDB(String userName) {
-//        Optional<User> userResult = userRepository.findOneByLogin(userName);
-//        List<CourseDto> result = new ArrayList();
-//        if (userResult.isPresent()) {
-//            User user = userResult.get();
-//            userCourseRepository.findAllByUser(user).ifPresent((courses -> {
-//                for (UserCourse userCourse : courses) {
-//                    Course course = userCourse.getCourse();
-//                    result.add(new CourseDto(course.getCourseName(), course.getCourseLocation(),
-//                                             course.getCourseContent(), course.getTeacherId()));
-//                }
-//            }));
-//        }
-//
-//        return result;
-//    }
+
+    public List<CourseDto> findAllUserCoursesDtoFromDB() {
+        Optional<User> userId = userService.getUserWithAuthorities();
+        Optional<User> userResult = userRepository.findOneByLogin(userId);
+        List<CourseDto> result = new ArrayList();
+        if (userResult.isPresent()) {
+            User user = userResult.get();
+            userCourseRepository.findAllByUser(user_id).ifPresent((courses -> {
+                for (Course userCourse : courses) {
+                    Course course = userCourse.getCourse();
+                    result.add(new CourseDto(course.getCourseName(), course.getCourseLocation(),
+                                             course.getCourseContent(), course.getTeacherId()));
+                }
+            }));
+        }
+
+        return result;
+    }
 
     public List<CourseWithTNDto> findAllCoursesDtoWithTeacherNameFromDB() {
         return courseRepository.findAllCoursesDtoWithTeacherName();
